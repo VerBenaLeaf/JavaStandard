@@ -1,10 +1,55 @@
 package ch11;
+import java.util.*;
+import java.io.*;
 
 public class PropertiesEx2 {
-
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		if (args.length != 1)
+			System.exit(0);
 
+		Properties prop = new Properties();
+
+		String inputFile = args[0];
+
+		try {
+			prop.load(new FileInputStream(inputFile));
+		}
+
+		catch (IOException e)
+		{
+			System.exit(0);
+		}
+
+		String name = prop.getProperty("name");
+		String[] data = prop.getProperty("data").split(",");
+		int max = 0;
+		int min = 0;
+		int sum = 0;
+
+		for (int i = 0; i<data.length ; i++ )
+		{
+			int intValue = Integer.parseInt(data[i]);
+
+			if (i == 0) max = min = intValue;
+
+			if (max < intValue)
+			{
+				max = intValue;
+			} 
+			
+			else if (min > intValue)
+			{
+				min = intValue;
+			}
+
+			sum += intValue;
+		}
+
+		System.out.println("이름 : "+name);
+		System.out.println("최대값 : "+max);
+		System.out.println("최소값 : "+min);
+		System.out.println("합계 : "+sum);
+		System.out.println("평균 : "+(sum*100.0/data.length)/100);
 	}
 
 }
